@@ -1,0 +1,16 @@
+﻿  pch.cpp
+  Bezier.cpp
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(38): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(40): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(42): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(44): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(46): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(48): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(50): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(52): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(56): warning C4305: “初始化”: 从“double”到“float”截断
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(58): warning C4305: “+=”: 从“double”到“float”截断
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(62): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(64): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+e:\zyh12017245930(请勿删除)\bezier\bezier\bezier.cpp(76): warning C4018: “<”: 有符号/无符号不匹配
+  Bezier.vcxproj -> E:\zyh12017245930(请勿删除)\Bezier\Debug\Bezier.exe
