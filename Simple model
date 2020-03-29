@@ -1,0 +1,289 @@
+/*①首先绘制桌面，让其位于（0,0,0.6）坐标处，接着将模型按x,y,方向拉伸8倍*/
+void drawTop() {
+	glPushMatrix();
+	glColor3f(0.5, 1, 0.5);
+	glTranslatef(0, 0, 0.6);
+	glScalef(8, 8, 1);
+	glutSolidCube(0.2);
+	glPopMatrix();
+}
+/*②绘制桌腿桌腿函数，同理基于桌面位置*/
+void drawLeg(float x, float y) {
+	glPushMatrix();
+	glColor3f(0, 1, 1);
+	glTranslatef(x, y, 0);
+	glScalef(1, 1, 5);
+	glutSolidCube(0.2);
+	glPopMatrix();
+}
+/*③绘制桌子的整体函数，通过选择和位移变换修正其位置*/
+
+void drawDesk()
+{
+	glPushMatrix();
+
+	glRotatef(90, -1.0, 0.0, 0.0);
+	glRotatef(10, -1.0, 0.0, 0.0);
+	glRotatef(30, 0, 0, 1);
+	glScalef(0.5, 0.5, 0.5);
+
+	drawTop();
+	drawLeg(0.5, 0.5);
+	drawLeg(-0.5, 0.5);
+	drawLeg(-0.5, -0.5);
+	drawLeg(0.5, -0.5);
+	glPopMatrix();
+}
+（2）绘制茶壶
+void drawTeaPot()
+{
+	glPushMatrix();
+	glColor3f(0, 0, 1);
+	glTranslatef(0, 0.4, -0.6);
+	glutSolidTeapot(0.1);
+	glPopMatrix();
+}
+将茶壶与桌子调整位置，使茶壶置于桌上
+ 
+（2）绘制墙面与地板
+墙面与地板也采用生成长方体的方法，然后通过选择和位移变换调整位置
+void drawground()
+{
+	glPushMatrix();
+	glColor3f(0.5, 0.5, 0.5);
+	glTranslatef(0, 0.5, -0.4);
+	glScalef(2, 4, 0.0001);
+	glutSolidCube(2);
+	glPopMatrix();
+}
+三、实验过程
+1.绘制实验需要的图像模型
+由于OpenGL中自带有生成茶壶的函数，所以首先考虑绘制桌子，简单的桌子模型可以由五块长方体通过不同的位置摆放直接拼接而成，于是我采用如下绘制方法：
+
+（1）考虑到桌子由桌面与桌腿构成，所以桌子模型应该分成两部分，桌面部分和桌腿部分
+/*①首先绘制桌面，让其位于（0,0,0.6）坐标处，接着将模型按x,y,方向拉伸8倍*/
+void drawTop() {
+	glPushMatrix();
+	glColor3f(0.5, 1, 0.5);
+	glTranslatef(0, 0, 0.6);
+	glScalef(8, 8, 1);
+	glutSolidCube(0.2);
+	glPopMatrix();
+}
+/*②绘制桌腿桌腿函数，同理基于桌面位置*/
+void drawLeg(float x, float y) {
+	glPushMatrix();
+	glColor3f(0, 1, 1);
+	glTranslatef(x, y, 0);
+	glScalef(1, 1, 5);
+	glutSolidCube(0.2);
+	glPopMatrix();
+}
+/*③绘制桌子的整体函数，通过选择和位移变换修正其位置*/
+
+void drawDesk()
+{
+	glPushMatrix();
+
+	glRotatef(90, -1.0, 0.0, 0.0);
+	glRotatef(10, -1.0, 0.0, 0.0);
+	glRotatef(30, 0, 0, 1);
+	glScalef(0.5, 0.5, 0.5);
+
+	drawTop();
+	drawLeg(0.5, 0.5);
+	drawLeg(-0.5, 0.5);
+	drawLeg(-0.5, -0.5);
+	drawLeg(0.5, -0.5);
+	glPopMatrix();
+}
+绘制结果如下图：
+ 
+（2）绘制茶壶
+void drawTeaPot()
+{
+	glPushMatrix();
+	glColor3f(0, 0, 1);
+	glTranslatef(0, 0.4, -0.6);
+	glutSolidTeapot(0.1);
+	glPopMatrix();
+}
+将茶壶与桌子调整位置，使茶壶置于桌上
+ 
+（2）绘制墙面与地板
+墙面与地板也采用生成长方体的方法，然后通过选择和位移变换调整位置
+void drawground()
+{
+	glPushMatrix();
+	glColor3f(0.5, 0.5, 0.5);
+	glTranslatef(0, 0.5, -0.4);
+	glScalef(2, 4, 0.0001);
+	glutSolidCube(2);
+	glPopMatrix();
+}
+效果如下：
+ 
+
+2.为三维模型进行光照设置
+void SetupLights()
+{
+	GLfloat ambientLight[] = { 0.2f,  0.2f,  0.2f,  1.0f };//环境光
+	GLfloat diffuseLight[] = { 0.9f,  0.9f,  0.9f,  1.0f };//漫反射
+	GLfloat specularLight[] = { 1.0f,  1.0f,  1.0f,  1.0f };//镜面光
+	GLfloat lightPos[] = { 50.0f, 80.0f, 60.0f, 1.0f };//光源位置
+
+	glEnable(GL_LIGHTING);								//启用光照
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);		//设置环境光源
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);		//设置漫反射光源
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);	//设置镜面光源
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);		//设置灯光位置
+	glEnable(GL_LIGHT0);								//打开第一个灯光
+
+	glEnable(GL_COLOR_MATERIAL);						//启用材质的颜色跟踪
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);	//指定材料着色的面
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specularLight); //指定材料对镜面光的反应
+	glMateriali(GL_FRONT, GL_SHININESS, 100);           //指定反射系数
+}
+
+效果如下：
+ 
+3.为三维模型进行纹理映射贴图
+纹理映射借鉴老师代码中的方法进行实现，首先配置了FreeImage库，采用了二维纹理映射
+
+/*①纹理映射方法*/
+void tiehua() {
+	glBindTexture(GL_TEXTURE_2D, S_png_tex);   // 选择纹理
+	glBegin(GL_QUADS);
+	// 前面
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f); // 纹理和四边形的左下
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f); // 纹理和四边形的右下
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f); // 纹理和四边形的右上
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f); // 纹理和四边形的左上
+	glEnd();
+	// 后面
+	glBindTexture(GL_TEXTURE_2D, S_png_tex);   // 选择纹理
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f); // 纹理和四边形的右下
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f); // 纹理和四边形的右上
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f); // 纹理和四边形的左上
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f); // 纹理和四边形的左下
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, S_png_tex);   // 选择纹理
+	glBegin(GL_QUADS);
+	// 顶面
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f); // 纹理和四边形的左上
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f); // 纹理和四边形的左下
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f); // 纹理和四边形的右下
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f); // 纹理和四边形的右上
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, S_png_tex);  // 选择纹理
+	glBegin(GL_QUADS);
+	// 底面
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f); // 纹理和四边形的右上
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f); // 纹理和四边形的左上
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f); // 纹理和四边形的左下
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f); // 纹理和四边形的右下
+	// 右面
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f); // 纹理和四边形的右下
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f); // 纹理和四边形的右上
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f); // 纹理和四边形的左上
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f); // 纹理和四边形的左下
+	// 左面
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f); // 纹理和四边形的左下
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f); // 纹理和四边形的右下
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f); // 纹理和四边形的右上
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f); // 纹理和四边形的左上
+	glEnd();
+
+	glFlush();}
+
+/*②通过调用freeimage库中的方法读取图片让其显示*/
+#if defined(FREEIMAGE_LIB)
+	FreeImage_Initialise(0);
+#endif
+
+	LOADTEXTURE(S_bmp_tex, "dimian.jpg");
+	LOADTEXTURE(S_png_tex, "zhuozi.jpg");
+	LOADTEXTURE(S_jpg_tex, "zhuozi.jpg");
+	LOADTEXTURE(S_tga_tex, "zhuozi.jpg");
+
+	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+实验效果如下：
+ 
+4.为模型添加键盘旋转的响应使其能够通过x,y,z轴进行旋转
+void keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'x':
+	case 'X':
+		xyz[0] = 1;
+		xyz[1] = xyz[2] = 0;
+		break;
+	case 'y':
+	case 'Y':
+		xyz[1] = 1;
+		xyz[0] = xyz[2] = 0;
+		break;
+	case 'z':
+	case 'Z':
+		xyz[2] = 1;
+		xyz[0] = xyz[1] = 0;
+		break;
+	case 'a':
+	case 'A':
+		xyz[0] = xyz[1] = xyz[2] = 0;
+		break;
+	case 'b':
+	case 'B':
+		xyz[0] = xyz[1] = xyz[2] = 1;
+		break;
+	default:
+		break;
+	}
+	printf("当前绕%c轴旋转\n", key);
+	glutPostRedisplay();
+}
+效果如下：
+ 
+ 
+ 
+
+5.本次实验中导入的库以及主函数
+#include<windows.h>
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+
+#include<stdlib.h>
+#include<stdio.h>
+
+#include <malloc.h>
+
+#include "FreeImage.h"
+
+
+/*主函数*/
+int main(int argc, char *argv[]) {
+	glutInit(&argc, argv);
+
+	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH);
+
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(600, 480);
+	glutCreateWindow("茶壶桌子墙");
+	glutDisplayFunc(display);
+	glutKeyboardFunc(&keyboard);
+	SetupLights();					//设置光照
+	glutMainLoop();
+	return 0;
+}
